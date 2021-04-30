@@ -9,15 +9,14 @@ public class inference {
     static void addClause(File f, int litteral , int n) throws IOException {
        Writer file = new BufferedWriter(new FileWriter(f.getName(), true));
        file.write("");
-       if( litteral >= n){ System.out.println("erreur : ca depasse le nombre de variable"); System.exit(-1);}
-        litteral=litteral*-1;
+         litteral=litteral*-1;
        String NonBut = String.valueOf(litteral);
        NonBut = NonBut+" 0\n";
        file.append(NonBut);
         file.close();
     }
 
-    static int updateFile(File f) throws IOException {
+    static int updateFile(File f,int litteral) throws IOException {
         File inputFile = new File("test1.cnf");
         BufferedReader reader = new BufferedReader(new FileReader(inputFile));
         Writer file = new BufferedWriter(new FileWriter("test2.cnf", true));
@@ -33,7 +32,9 @@ public class inference {
                  toDelete = currentLine; //System.out.println(" Todelete = "+toDelete);
                 String string = trimmedLine.substring(6);
                // System.out.println(" String =" + string);
-                nbr_var = Integer.valueOf( string.substring(0,1)); //System.out.println(" var = "+nbr_var);
+                nbr_var = Integer.valueOf( string.substring(0,1));
+                if( (litteral) >= nbr_var){ nbr_var = litteral  ;}
+                //System.out.println(" var = "+nbr_var);
                 nbr_clause = Integer.valueOf( string.substring(2));//System.out.println(" clauses = "+nbr_clause);
                 nbr_clause++;
                 file.append("p cnf ");
